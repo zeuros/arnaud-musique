@@ -1,0 +1,9 @@
+[
+  {
+    "id": "test-partition",
+    "nom": "Partition de démonstration",
+    "fichier": "sheets/test-partition.pdf",
+    "description": "Partition test pour valider le lecteur PDF",
+    "date": "2026-06-18"
+  }
+]

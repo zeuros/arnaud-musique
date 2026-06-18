@@ -1,0 +1,59 @@
+%PDF-1.4
+1 0 obj
+<</Type /Catalog /Pages 2 0 R>>
+endobj
+2 0 obj
+<</Type /Pages /Kids [3 0 R] /Count 1>>
+endobj
+3 0 obj
+<</Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources <</Font <</F1 4 0 R /F2 5 0 R>>>> /Contents 6 0 R>>
+endobj
+4 0 obj
+<</Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding>>
+endobj
+5 0 obj
+<</Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding>>
+endobj
+6 0 obj
+<</Length 394>>
+stream
+BT
+/F1 24 Tf
+50 780 Td
+(Arnaud Musique - Partition Test) Tj
+/F2 14 Tf
+0 -40 Td
+(Partition de demonstration) Tj
+0 -30 Td
+(Grenoble, 2026) Tj
+0 -60 Td
+/F1 16 Tf
+(Portee musicale:) Tj
+ET
+50 600 m 545 600 l S
+50 610 m 545 610 l S
+50 620 m 545 620 l S
+50 630 m 545 630 l S
+50 640 m 545 640 l S
+50 520 m 545 520 l S
+50 530 m 545 530 l S
+50 540 m 545 540 l S
+50 550 m 545 550 l S
+50 560 m 545 560 l S
+
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000056 00000 n 
+0000000111 00000 n 
+0000000241 00000 n 
+0000000341 00000 n 
+0000000436 00000 n 
+trailer
+<</Size 7 /Root 1 0 R>>
+startxref
+879
+%%EOF

@@ -1,0 +1,81 @@
+<section class="hero">
+  <!-- Animated background -->
+  <div class="bg-animation">
+    @for (note of notes; track note.left) {
+      <span
+        class="floating-note"
+        [style.left]="note.left + '%'"
+        [style.animation-delay]="note.delay + 's'"
+        [style.animation-duration]="note.duration + 's'"
+        [style.font-size]="note.size + 'rem'"
+      >{{ note.char }}</span>
+    }
+    <div class="waving-sheet">
+      <svg viewBox="0 0 300 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="wave">
+            <feTurbulence type="turbulence" baseFrequency="0.018 0.005" numOctaves="2" result="t">
+              <animate attributeName="baseFrequency" dur="10s"
+                values="0.018 0.005;0.025 0.008;0.018 0.005" repeatCount="indefinite"/>
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="t" scale="12"
+              xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <g filter="url(#wave)">
+          <rect width="300" height="420" fill="rgba(255,255,255,0.04)" rx="4"/>
+          @for (y of [60,80,100,120,140, 200,220,240,260,280, 340,360,380]; track y) {
+            <line [attr.x1]="20" [attr.y1]="y" [attr.x2]="280" [attr.y2]="y"
+              stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          }
+          <text x="30" y="55" fill="rgba(201,168,76,0.3)" font-size="28" font-family="serif">𝄞</text>
+          <text x="30" y="195" fill="rgba(201,168,76,0.3)" font-size="28" font-family="serif">𝄞</text>
+          <text x="30" y="335" fill="rgba(201,168,76,0.3)" font-size="28" font-family="serif">𝄞</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Hero content -->
+  @if (config(); as c) {
+    <div class="hero-content">
+      <div class="profile">
+        <div class="avatar-wrapper">
+          <img class="avatar" src="/assets/arnaud-placeholder.jpg" alt="Arnaud Deschar"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="avatar-fallback">♪</div>
+        </div>
+        <div class="profile-text">
+          <h1>{{ c.nom }}</h1>
+          <p class="titre">{{ c.titre }}</p>
+          <p class="description">{{ c.description }}</p>
+        </div>
+      </div>
+    </div>
+  }
+</section>
+
+<!-- Presence section -->
+@if (config(); as c) {
+  <section class="presence">
+    <h2>Retrouvez Arnaud sur</h2>
+    <div class="links-grid">
+      @for (lien of c.liens; track lien.id) {
+        <a [href]="lien.url" class="link-card" [class.disabled]="lien.url === '#'" target="_blank" rel="noopener">
+          <div class="link-icon">
+            @if (lien.id === 'leboncoin') {
+              <span class="icon-lbc">LBC</span>
+            } @else {
+              <span class="icon-placeholder">?</span>
+            }
+          </div>
+          <div class="link-body">
+            <strong>{{ lien.titre }}</strong>
+            <span>{{ lien.description }}</span>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+      }
+    </div>
+  </section>
+}

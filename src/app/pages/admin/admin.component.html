@@ -1,0 +1,129 @@
+<div class="admin-page">
+  <!-- Login screen -->
+  @if (!auth.isAuthenticated()) {
+    <div class="login-wrapper">
+      <div class="login-card">
+        <span class="login-icon">♪</span>
+        <h1>Administration</h1>
+        <p>Entrez votre code d'accès GitHub</p>
+
+        <div class="field">
+          <input
+            type="password"
+            placeholder="github_pat_..."
+            [value]="tokenInput()"
+            (input)="tokenInput.set($any($event.target).value)"
+            (keydown.enter)="login()"
+            autocomplete="current-password"
+          />
+        </div>
+
+        @if (loginError()) {
+          <p class="error">{{ loginError() }}</p>
+        }
+
+        <button class="btn-primary" (click)="login()" [disabled]="loginLoading()">
+          {{ loginLoading() ? 'Vérification...' : 'Se connecter' }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Admin dashboard -->
+  @if (auth.isAuthenticated()) {
+    <div class="dashboard">
+      <header class="dash-header">
+        <h1>Administration <span>arnaud-musique</span></h1>
+        <button class="btn-logout" (click)="logout()">Déconnexion</button>
+      </header>
+
+      <!-- Site config section -->
+      @if (config(); as c) {
+        <section class="card">
+          <h2>Informations du site</h2>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Nom</label>
+              <input type="text" [(ngModel)]="c.nom"/>
+            </div>
+            <div class="field">
+              <label>Titre</label>
+              <input type="text" [(ngModel)]="c.titre"/>
+            </div>
+            <div class="field full">
+              <label>Description</label>
+              <textarea [(ngModel)]="c.description" rows="4"></textarea>
+            </div>
+          </div>
+
+          <h3>Liens</h3>
+          <div class="liens-list">
+            @for (lien of c.liens; track lien.id; let i = $index) {
+              <div class="lien-row">
+                <input type="text" [(ngModel)]="lien.titre" placeholder="Titre"/>
+                <input type="text" [(ngModel)]="lien.url" placeholder="URL"/>
+                <input type="text" [(ngModel)]="lien.description" placeholder="Description"/>
+                <button class="btn-icon danger" (click)="removeLien(i)" title="Supprimer">✕</button>
+              </div>
+            }
+          </div>
+          <button class="btn-secondary" (click)="addLien()">+ Ajouter un lien</button>
+
+          <div class="actions">
+            <button class="btn-primary" (click)="saveConfig()" [disabled]="saving()">
+              {{ saving() ? 'Sauvegarde...' : 'Sauvegarder' }}
+            </button>
+            @if (saveMsg()) {
+              <span class="msg">{{ saveMsg() }}</span>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- Sheets section -->
+      <section class="card">
+        <h2>Partitions</h2>
+
+        <div class="upload-zone">
+          <label for="pdf-upload" class="upload-label">
+            <span class="upload-icon">⬆</span>
+            <span>{{ uploading() ? 'Upload en cours...' : 'Cliquer pour uploader un PDF' }}</span>
+            <input id="pdf-upload" type="file" accept=".pdf" (change)="onFileSelected($event)" [disabled]="uploading()"/>
+          </label>
+          @if (uploadMsg()) {
+            <p class="msg">{{ uploadMsg() }}</p>
+          }
+        </div>
+
+        <table class="sheets-table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Fichier</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (sheet of sheets(); track sheet.id) {
+              <tr>
+                <td>{{ sheet.nom }}</td>
+                <td><code>{{ sheet.fichier }}</code></td>
+                <td>{{ sheet.date }}</td>
+                <td>
+                  @if (repoFileFor(sheet); as rf) {
+                    <button class="btn-icon danger" (click)="deleteSheet(sheet, rf)" title="Supprimer">✕</button>
+                  }
+                </td>
+              </tr>
+            }
+            @if (sheets().length === 0) {
+              <tr><td colspan="4" class="empty">Aucune partition</td></tr>
+            }
+          </tbody>
+        </table>
+      </section>
+    </div>
+  }
+</div>

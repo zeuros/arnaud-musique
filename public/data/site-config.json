@@ -1,0 +1,25 @@
+{
+  "nom": "Arnaud Deschar",
+  "titre": "Professeur de musique à Grenoble",
+  "description": "Passionné de musique depuis plus de 20 ans, Arnaud Deschar propose des cours de piano, guitare et solfège pour tous les niveaux, enfants comme adultes. Installé à Grenoble, il adapte son enseignement à chaque élève avec pédagogie et bienveillance.",
+  "liens": [
+    {
+      "id": "leboncoin",
+      "titre": "Cours sur LeBonCoin",
+      "url": "https://www.leboncoin.fr/",
+      "description": "Réservez un cours directement sur LeBonCoin"
+    },
+    {
+      "id": "placeholder1",
+      "titre": "Lien à venir",
+      "url": "#",
+      "description": "Prochainement disponible"
+    },
+    {
+      "id": "placeholder2",
+      "titre": "Lien à venir",
+      "url": "#",
+      "description": "Prochainement disponible"
+    }
+  ]
+}
