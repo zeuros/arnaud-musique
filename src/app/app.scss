@@ -42,4 +42,11 @@
 
     &:hover, &.active { color: #c9a84c; }
   }
+
+  .nav-admin {
+    opacity: 0.25;
+    font-size: 1rem;
+    transition: opacity 0.15s;
+    &:hover, &.active { opacity: 1; }
+  }
 }
