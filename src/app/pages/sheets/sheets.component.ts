@@ -35,7 +35,7 @@ export class SheetsComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.http.get<Sheet[]>('https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/data/sheets.json').subscribe(s => this.sheets.set(s));
+    this.http.get<Sheet[]>(`https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/data/sheets.json?t=${Date.now()}`).subscribe(s => this.sheets.set(s));
   }
 
   ngOnDestroy(): void {
