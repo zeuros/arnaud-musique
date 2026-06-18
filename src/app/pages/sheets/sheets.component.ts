@@ -1,10 +1,6 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { InputTextModule } from 'primeng/inputtext';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
 
 export interface Sheet {
   id: string;
@@ -16,7 +12,7 @@ export interface Sheet {
 
 @Component({
   selector: 'app-sheets',
-  imports: [FormsModule, InputTextModule, IconFieldModule, InputIconModule],
+  imports: [],
   templateUrl: './sheets.component.html',
   styleUrl: './sheets.component.scss',
 })

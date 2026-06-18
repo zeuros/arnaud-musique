@@ -3,16 +3,15 @@
     <h1>Partitions</h1>
     <p>Cliquez sur une partition pour la visualiser</p>
 
-    <p-iconfield>
-      <p-inputicon styleClass="pi pi-search"/>
+    <div class="search-box">
+      <span class="search-icon">♫</span>
       <input
-        pInputText
         type="text"
         placeholder="Rechercher une partition..."
         [value]="search()"
         (input)="onSearch($any($event.target).value)"
       />
-    </p-iconfield>
+    </div>
   </div>
 
   <div class="sheets-layout">
