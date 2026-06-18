@@ -1,13 +1,12 @@
 <section class="card stats-card">
   <h2>Audience <span class="badge">GoatCounter</span></h2>
 
-  <!-- Token setup -->
   <div class="token-row">
     <div class="field" style="flex:1">
       <label>Token API GoatCounter</label>
       <input
         type="password"
-        placeholder="Votre token API GoatCounter..."
+        placeholder="Token depuis goatcounter.com → votre email → API"
         [value]="apiTokenInput()"
         (input)="apiTokenInput.set($any($event.target).value)"
         (keydown.enter)="saveToken()"
@@ -19,7 +18,7 @@
   </div>
 
   @if (!siteCode) {
-    <p class="hint">⚠ Renseignez le champ <strong>GoatCounter site code</strong> dans les informations du site ci-dessus, puis sauvegardez.</p>
+    <p class="hint">⚠ Renseignez le <strong>GoatCounter site code</strong> dans les informations du site.</p>
   }
 
   @if (error()) {
@@ -27,34 +26,24 @@
   }
 
   @if (loading()) {
-    <p class="loading">Chargement des stats...</p>
+    <p class="loading">Chargement...</p>
   }
 
-  <!-- Totals -->
-  @if (!loading() && totals7()) {
+  @if (!loading() && !error() && total() > 0) {
     <div class="totals-grid">
       <div class="total-card">
-        <span class="total-value">{{ totals7()!.total }}</span>
-        <span class="total-label">Pages vues · 7 jours</span>
-      </div>
-      <div class="total-card">
-        <span class="total-value">{{ totals7()!.total_unique }}</span>
-        <span class="total-label">Visiteurs uniques · 7 jours</span>
-      </div>
-      <div class="total-card">
-        <span class="total-value">{{ totals30()?.total ?? '—' }}</span>
+        <span class="total-value">{{ total() }}</span>
         <span class="total-label">Pages vues · 30 jours</span>
       </div>
       <div class="total-card">
-        <span class="total-value">{{ totals30()?.total_unique ?? '—' }}</span>
+        <span class="total-value">{{ totalUnique() }}</span>
         <span class="total-label">Visiteurs uniques · 30 jours</span>
       </div>
     </div>
 
-    <!-- Top pages -->
     @if (hits().length > 0) {
       <div class="top-pages">
-        <h3>Pages les plus visitées <small>(30 jours)</small></h3>
+        <h3>Pages les plus visitées</h3>
         @for (hit of hits(); track hit.path) {
           <div class="bar-row">
             <span class="bar-path">{{ hit.path || '/' }}</span>
@@ -66,12 +55,15 @@
         }
       </div>
     }
+  }
 
-    <a
-      class="gc-link"
-      [href]="'https://' + siteCode + '.goatcounter.com'"
-      target="_blank"
-      rel="noopener"
-    >Voir le tableau de bord complet →</a>
+  @if (!loading() && total() === 0 && !error()) {
+    <p class="hint">Aucune visite enregistrée pour l'instant.</p>
+  }
+
+  @if (siteCode) {
+    <a class="gc-link" [href]="dashboardUrl()" target="_blank" rel="noopener">
+      Tableau de bord complet →
+    </a>
   }
 </section>

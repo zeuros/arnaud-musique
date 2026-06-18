@@ -1,12 +1,11 @@
-import { Component, Input, OnInit, signal, computed } from '@angular/core';
+import { Component, Input, OnChanges, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { GoatCounterService, GcHit, GcTotals } from '../../../core/services/goatcounter.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-function daysAgo(n: number): string {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d.toISOString().split('T')[0];
-}
+const TOKEN_KEY = 'gc_token';
+
+interface GcHit { path: string; title: string; count: number; count_unique: number; }
+interface GcHitsResponse { hits: GcHit[]; total: number; total_unique: number; }
 
 @Component({
   selector: 'app-stats',
@@ -14,59 +13,70 @@ function daysAgo(n: number): string {
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss',
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnChanges {
   @Input() siteCode = '';
 
-  apiTokenInput = signal('');
+  apiTokenInput = signal(localStorage.getItem(TOKEN_KEY) ?? '');
   saved = signal(false);
   loading = signal(false);
   error = signal('');
 
-  totals7 = signal<GcTotals | null>(null);
-  totals30 = signal<GcTotals | null>(null);
   hits = signal<GcHit[]>([]);
+  total = signal(0);
+  totalUnique = signal(0);
 
   maxCount = computed(() => Math.max(...this.hits().map(h => h.count), 1));
 
-  constructor(private gc: GoatCounterService) {}
+  dashboardUrl = computed(() =>
+    this.siteCode ? `https://${this.siteCode}.goatcounter.com` : '#'
+  );
 
-  ngOnInit(): void {
-    this.apiTokenInput.set(this.gc.getApiToken());
-    if (this.gc.hasApiToken() && this.siteCode) {
-      this.gc.init(this.siteCode);
-      this.load();
-    }
+  constructor(private http: HttpClient) {}
+
+  ngOnChanges(): void {
+    if (this.siteCode && this.getToken()) this.load();
   }
 
   saveToken(): void {
-    this.gc.saveApiToken(this.apiTokenInput());
-    this.gc.init(this.siteCode);
+    localStorage.setItem(TOKEN_KEY, this.apiTokenInput());
     this.saved.set(true);
     setTimeout(() => this.saved.set(false), 2000);
-    this.load();
+    if (this.siteCode) this.load();
   }
 
   load(): void {
+    const token = this.getToken();
+    if (!token || !this.siteCode) return;
     this.loading.set(true);
     this.error.set('');
-    const today = new Date().toISOString().split('T')[0];
 
-    this.gc.getTotals(daysAgo(7), today).subscribe({
-      next: t => this.totals7.set(t),
-      error: () => this.error.set('Impossible de charger les stats. Vérifiez le site code et le token API.'),
-    });
+    const end = new Date().toISOString().split('T')[0];
+    const start = new Date(Date.now() - 30 * 86400000).toISOString().split('T')[0];
 
-    this.gc.getTotals(daysAgo(30), today).subscribe({
-      next: t => this.totals30.set(t),
-    });
-
-    this.gc.getHits(daysAgo(30), today).subscribe({
-      next: r => { this.hits.set(r.hits ?? []); this.loading.set(false); },
-      error: () => this.loading.set(false),
+    this.http.get<GcHitsResponse>(
+      `https://${this.siteCode}.goatcounter.com/api/v0/stats/hits?start=${start}&end=${end}&limit=10`,
+      { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+    ).subscribe({
+      next: r => {
+        this.hits.set(r.hits ?? []);
+        this.total.set(r.total ?? 0);
+        this.totalUnique.set(r.total_unique ?? 0);
+        this.loading.set(false);
+      },
+      error: e => {
+        this.loading.set(false);
+        if (e.status === 429) this.error.set('Trop de requêtes — réessayez dans quelques secondes.');
+        else if (e.status === 401) this.error.set('Token invalide.');
+        else this.error.set(`Erreur ${e.status} — vérifiez le site code et le token.`);
+      },
     });
   }
 
   barWidth(count: number): string {
     return Math.round((count / this.maxCount()) * 100) + '%';
+  }
+
+  private getToken(): string {
+    return localStorage.getItem(TOKEN_KEY) ?? '';
   }
 }
