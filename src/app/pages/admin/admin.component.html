@@ -37,6 +37,9 @@
         <button class="btn-logout" (click)="logout()">Déconnexion</button>
       </header>
 
+      <!-- Audience stats -->
+      <app-stats [siteCode]="config()?.goatcounterSite ?? ''"/>
+
       <!-- Site config section -->
       @if (config(); as c) {
         <section class="card">
@@ -54,6 +57,11 @@
             <div class="field full">
               <label>Description</label>
               <textarea [(ngModel)]="c.description" rows="4"></textarea>
+            </div>
+            <div class="field full">
+              <label>GoatCounter site code</label>
+              <input type="text" [(ngModel)]="c.goatcounterSite" placeholder="ex: arnaud-musique"/>
+              <small>Créez un compte sur <strong>goatcounter.com</strong> — le code est le sous-domaine de votre URL GoatCounter.</small>
             </div>
           </div>
 

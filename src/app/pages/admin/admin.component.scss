@@ -4,6 +4,14 @@
   padding-top: 64px;
 }
 
+.field small {
+  font-size: 0.78rem;
+  color: #556;
+  margin-top: 0.2rem;
+
+  strong { color: #778; }
+}
+
 // Login
 .login-wrapper {
   display: flex;

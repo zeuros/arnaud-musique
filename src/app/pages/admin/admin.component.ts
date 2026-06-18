@@ -3,11 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { GithubService, GithubFile } from '../../core/services/github.service';
 import { HttpClient } from '@angular/common/http';
+import { StatsComponent } from './stats/stats.component';
 
 interface SiteConfig {
   nom: string;
   titre: string;
   description: string;
+  goatcounterSite?: string;
   liens: { id: string; titre: string; url: string; description: string }[];
 }
 
@@ -21,7 +23,7 @@ interface Sheet {
 
 @Component({
   selector: 'app-admin',
-  imports: [FormsModule],
+  imports: [FormsModule, StatsComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })

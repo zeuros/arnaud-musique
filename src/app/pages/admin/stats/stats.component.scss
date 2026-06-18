@@ -1,0 +1,141 @@
+.stats-card {
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+}
+
+.badge {
+  font-size: 0.7rem;
+  background: rgba(201, 168, 76, 0.15);
+  color: #c9a84c;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 20px;
+  padding: 0.15rem 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.token-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-end;
+
+  .btn-secondary { flex-shrink: 0; height: 36px; }
+}
+
+.hint {
+  font-size: 0.83rem;
+  color: #a07030;
+  background: rgba(201, 168, 76, 0.07);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin: 0;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: #e06060;
+  margin: 0;
+}
+
+.loading {
+  color: #556;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.totals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+
+  @media (max-width: 640px) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.total-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.total-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #c9a84c;
+  line-height: 1;
+}
+
+.total-label {
+  font-size: 0.75rem;
+  color: #556;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.top-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h3 {
+    font-size: 0.85rem;
+    color: #778;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.5rem;
+
+    small { font-size: 0.8em; opacity: 0.7; }
+  }
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 40px;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.bar-path {
+  font-size: 0.8rem;
+  color: #a0a8b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c9a84c, #e8c96a);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.bar-count {
+  font-size: 0.78rem;
+  color: #556;
+  text-align: right;
+}
+
+.gc-link {
+  font-size: 0.82rem;
+  color: #c9a84c;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+
+  &:hover { opacity: 1; }
+}
