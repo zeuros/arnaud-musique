@@ -3,6 +3,10 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'public/sheets/**'
+      - 'public/data/sheets.json'
+      - 'public/data/site-config.json'
   workflow_dispatch:
 
 permissions:

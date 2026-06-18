@@ -2,7 +2,7 @@
   {
     "id": "test-partition",
     "nom": "Partition de démonstration",
-    "fichier": "sheets/test-partition.pdf",
+    "fichier": "https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/sheets/test-partition.pdf",
     "description": "Partition test pour valider le lecteur PDF",
     "date": "2026-06-18"
   }

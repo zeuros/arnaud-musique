@@ -143,7 +143,7 @@ export class AdminComponent implements OnInit {
           const newSheet: Sheet = {
             id: file.name.replace('.pdf', ''),
             nom: file.name.replace('.pdf', '').replace(/-/g, ' '),
-            fichier: `sheets/${file.name}`,
+            fichier: `https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/sheets/${file.name}`,
             description: '',
             date: new Date().toISOString().split('T')[0],
           };

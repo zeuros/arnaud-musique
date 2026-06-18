@@ -37,7 +37,8 @@ export class SheetsComponent implements OnInit {
 
   select(sheet: Sheet): void {
     this.selected.set(sheet);
-    this.pdfUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl('/' + sheet.fichier));
+    const url = sheet.fichier.startsWith('http') ? sheet.fichier : '/' + sheet.fichier;
+    this.pdfUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(url));
   }
 
   onSearch(value: string): void {
