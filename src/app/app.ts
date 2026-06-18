@@ -16,7 +16,7 @@ export class App implements OnInit {
   private gc = inject(GoatCounterService);
 
   ngOnInit(): void {
-    this.http.get<{ goatcounterSite?: string }>('data/site-config.json').subscribe(c => {
+    this.http.get<{ goatcounterSite?: string }>('https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/data/site-config.json').subscribe(c => {
       if (c.goatcounterSite) {
         this.gc.init(c.goatcounterSite);
         this.router.events

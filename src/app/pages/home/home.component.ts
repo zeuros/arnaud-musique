@@ -32,6 +32,6 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<SiteConfig>('data/site-config.json').subscribe(c => this.config.set(c));
+    this.http.get<SiteConfig>('https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/data/site-config.json').subscribe(c => this.config.set(c));
   }
 }
