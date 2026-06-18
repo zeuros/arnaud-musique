@@ -30,7 +30,7 @@ export class GithubService {
 
   getFile(path: string): Observable<{ content: string; sha: string }> {
     return this.http.get<{ content: string; sha: string }>(
-      `${API}/repos/${OWNER}/${REPO}/contents/${path}`,
+      `${API}/repos/${OWNER}/${REPO}/contents/${path}?t=${Date.now()}`,
       { headers: this.headers() }
     );
   }
@@ -62,7 +62,7 @@ export class GithubService {
 
   listDirectory(path: string): Observable<GithubFile[]> {
     return this.http.get<GithubFile[]>(
-      `${API}/repos/${OWNER}/${REPO}/contents/${path}`,
+      `${API}/repos/${OWNER}/${REPO}/contents/${path}?t=${Date.now()}`,
       { headers: this.headers() }
     );
   }
