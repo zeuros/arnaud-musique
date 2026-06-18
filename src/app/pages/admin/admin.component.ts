@@ -74,14 +74,18 @@ export class AdminComponent implements OnInit {
     this.config.set(null);
   }
 
+  private b64decode(b64: string): string {
+    return decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
+  }
+
   private loadData(): void {
     this.github.getFile('public/data/site-config.json').subscribe(f => {
       this.configSha.set(f.sha);
-      this.config.set(JSON.parse(atob(f.content.replace(/\n/g, ''))));
+      this.config.set(JSON.parse(this.b64decode(f.content)));
     });
     this.github.getFile('public/data/sheets.json').subscribe(f => {
       this.sheetsSha.set(f.sha);
-      this.sheets.set(JSON.parse(atob(f.content.replace(/\n/g, ''))));
+      this.sheets.set(JSON.parse(this.b64decode(f.content)));
     });
     this.github.listDirectory('public/sheets').subscribe(files =>
       this.repoSheets.set(files.filter(f => f.name.endsWith('.pdf')))
