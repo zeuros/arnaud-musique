@@ -36,7 +36,12 @@
     </aside>
 
     <main class="pdf-viewer">
-      @if (pdfUrl(); as url) {
+      @if (pdfLoading()) {
+        <div class="pdf-placeholder">
+          <span>♩</span>
+          <p>Chargement...</p>
+        </div>
+      } @else if (pdfUrl(); as url) {
         <iframe
           [src]="url"
           title="Visualiseur PDF"
