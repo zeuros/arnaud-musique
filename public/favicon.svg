@@ -1,4 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#0d0f1a" rx="8"/>
-  <text x="32" y="46" text-anchor="middle" font-size="40" fill="#c9a84c" font-family="serif">♪</text>
+  <defs>
+    <linearGradient id="tube" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f0d878"/>
+      <stop offset="35%"  stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#7a5e1a"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#dfc05a"/>
+      <stop offset="100%" stop-color="#6a4e10"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark rounded background -->
+  <rect width="64" height="64" rx="10" fill="#0d0f1a"/>
+
+  <!-- Crown (left end cap) -->
+  <rect x="3" y="27" width="7" height="10" rx="3.5" fill="url(#cap)"/>
+
+  <!-- Head joint — slightly wider -->
+  <rect x="8" y="26" width="12" height="12" rx="3" fill="#d4b45a"/>
+
+  <!-- Main body -->
+  <rect x="18" y="27" width="38" height="10" rx="0" fill="url(#tube)"/>
+
+  <!-- Foot joint (right end) -->
+  <rect x="54" y="28" width="7" height="8" rx="3" fill="url(#cap)"/>
+
+  <!-- Highlight streak along top -->
+  <rect x="9" y="27" width="50" height="2.5" rx="1.2" fill="#fff" opacity="0.2"/>
+
+  <!-- Embouchure hole -->
+  <ellipse cx="23" cy="32" rx="3" ry="2" fill="#1a0d00" opacity="0.8"/>
+
+  <!-- Tone holes -->
+  <circle cx="32" cy="32" r="2" fill="#1a0d00" opacity="0.8"/>
+  <circle cx="38" cy="32" r="2" fill="#1a0d00" opacity="0.8"/>
+  <circle cx="44" cy="32" r="2" fill="#1a0d00" opacity="0.8"/>
+  <circle cx="49" cy="32" r="1.6" fill="#1a0d00" opacity="0.8"/>
+  <circle cx="54" cy="32" r="1.4" fill="#1a0d00" opacity="0.8"/>
 </svg>
