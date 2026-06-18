@@ -50,7 +50,8 @@ export class SheetsComponent implements OnInit, OnDestroy {
 
     this.http.get(sheet.fichier, { responseType: 'blob' }).subscribe({
       next: blob => {
-        this.blobUrl = URL.createObjectURL(blob);
+        const pdf = new Blob([blob], { type: 'application/pdf' });
+        this.blobUrl = URL.createObjectURL(pdf);
         this.pdfUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(this.blobUrl));
         this.pdfLoading.set(false);
       },
