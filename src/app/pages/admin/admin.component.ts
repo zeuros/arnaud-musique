@@ -138,7 +138,8 @@ export class AdminComponent implements OnInit {
     reader.onload = () => {
       const base64 = (reader.result as string).split(',')[1];
       const path = `public/sheets/${file.name}`;
-      this.github.createFile(path, base64, `Add sheet: ${file.name}`).subscribe({
+      const existing = this.repoSheets().find(f => f.name === file.name);
+      this.github.createFile(path, base64, `Add sheet: ${file.name}`, existing?.sha).subscribe({
         next: () => {
           const newSheet: Sheet = {
             id: file.name.replace('.pdf', ''),

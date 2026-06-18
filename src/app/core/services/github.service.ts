@@ -43,10 +43,12 @@ export class GithubService {
     );
   }
 
-  createFile(path: string, content: string, message: string): Observable<unknown> {
+  createFile(path: string, content: string, message: string, sha?: string): Observable<unknown> {
+    const body: Record<string, string> = { message, content, branch: BRANCH };
+    if (sha) body['sha'] = sha;
     return this.http.put(
       `${API}/repos/${OWNER}/${REPO}/contents/${path}`,
-      { message, content, branch: BRANCH },
+      body,
       { headers: this.headers() }
     );
   }
