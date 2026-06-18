@@ -120,9 +120,7 @@
                 <td><code>{{ sheet.fichier }}</code></td>
                 <td>{{ sheet.date }}</td>
                 <td>
-                  @if (repoFileFor(sheet); as rf) {
-                    <button class="btn-icon danger" (click)="deleteSheet(sheet, rf)" title="Supprimer">✕</button>
-                  }
+                  <button class="btn-icon danger" (click)="deleteSheet(sheet)" title="Supprimer">✕</button>
                 </td>
               </tr>
             }

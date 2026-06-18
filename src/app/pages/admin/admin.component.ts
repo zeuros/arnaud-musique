@@ -170,21 +170,28 @@ export class AdminComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  deleteSheet(sheet: Sheet, repoFile: GithubFile): void {
+  deleteSheet(sheet: Sheet): void {
     if (!confirm(`Supprimer "${sheet.nom}" ?`)) return;
-    this.github.deleteFile(repoFile.path, repoFile.sha, `Delete sheet: ${sheet.fichier}`).subscribe({
-      next: () => {
-        const updated = this.sheets().filter(s => s.id !== sheet.id);
-        this.sheets.set(updated);
-        this.github.updateFile(
-          'public/data/sheets.json',
-          JSON.stringify(updated, null, 2),
-          this.sheetsSha(),
-          `Remove sheet entry: ${sheet.nom}`
-        ).subscribe((res: any) => this.sheetsSha.set(res.content.sha));
-        this.loadData();
-      },
-    });
+
+    const removeFromJson = () => {
+      const updated = this.sheets().filter(s => s.id !== sheet.id);
+      this.sheets.set(updated);
+      this.github.updateFile(
+        'public/data/sheets.json',
+        JSON.stringify(updated, null, 2),
+        this.sheetsSha(),
+        `Remove sheet entry: ${sheet.nom}`
+      ).subscribe((res: any) => this.sheetsSha.set(res.content.sha));
+      this.loadData();
+    };
+
+    const repoFile = this.repoFileFor(sheet);
+    if (repoFile) {
+      this.github.deleteFile(repoFile.path, repoFile.sha, `Delete sheet: ${sheet.nom}`)
+        .subscribe({ next: removeFromJson, error: removeFromJson });
+    } else {
+      removeFromJson();
+    }
   }
 
   repoFileFor(sheet: Sheet): GithubFile | undefined {
