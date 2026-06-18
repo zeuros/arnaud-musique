@@ -32,7 +32,7 @@ export class SheetsComponent implements OnInit {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.http.get<Sheet[]>('/data/sheets.json').subscribe(s => this.sheets.set(s));
+    this.http.get<Sheet[]>('data/sheets.json').subscribe(s => this.sheets.set(s));
   }
 
   select(sheet: Sheet): void {
