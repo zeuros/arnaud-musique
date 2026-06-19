@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { GoatCounterService } from './core/services/goatcounter.service';
 
 @Component({
@@ -16,7 +16,11 @@ export class App implements OnInit {
   private gc = inject(GoatCounterService);
 
   ngOnInit(): void {
-    this.http.get<{ goatcounterSite?: string }>(`https://raw.githubusercontent.com/zeuros/arnaud-musique/main/public/data/site-config.json?t=${Date.now()}`).subscribe(c => {
+    this.http.get<{ content: string }>(
+      `https://api.github.com/repos/zeuros/arnaud-musique/contents/public/data/site-config.json?t=${Date.now()}`
+    ).pipe(
+      map(r => JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g, ''))))) as { goatcounterSite?: string })
+    ).subscribe(c => {
       if (c.goatcounterSite) {
         this.gc.init(c.goatcounterSite);
         this.router.events
